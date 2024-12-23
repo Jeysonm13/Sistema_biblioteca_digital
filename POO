@@ -1,0 +1,80 @@
+# Clase para representar la información diaria del clima
+class ClimaDiario:
+    def __init__(self, dia, temperatura):
+        """
+        Constructor para inicializar los datos de un día específico.
+        """
+        self.dia = dia
+        self.temperatura = temperatura
+
+    def __str__(self):
+        """
+        Representación en cadena del objeto ClimaDiario.
+        """
+        return f"{self.dia}: {self.temperatura}°C"
+
+# Clase para gestionar el clima semanal
+class ClimaSemanal:
+    def __init__(self):
+        """
+        Constructor para inicializar la lista de ClimaDiario.
+        """
+        self.clima_semanal = []
+
+    def agregar_dia(self, dia, temperatura):
+        """
+        Método para agregar la información del clima de un día a la lista.
+        """
+        self.clima_semanal.append(ClimaDiario(dia, temperatura))
+
+    def calcular_promedio(self):
+        """
+        Método para calcular el promedio de temperaturas semanales.
+        """
+        total = sum(dia.temperatura for dia in self.clima_semanal)
+        promedio = total / len(self.clima_semanal)
+        return promedio
+
+    def mostrar_clima(self):
+        """
+        Método para mostrar la información del clima semanal.
+        """
+        print("\nClima semanal:")
+        for dia in self.clima_semanal:
+            print(dia)
+
+# Clase principal para gestionar la ejecución
+class ProgramaClima:
+    def __init__(self):
+        """
+        Constructor para inicializar el gestor de clima semanal.
+        """
+        self.clima_semanal = ClimaSemanal()
+
+    def ejecutar(self):
+        """
+        Método principal para ejecutar el programa.
+        """
+        dias_semana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        
+        print("=== Programa para calcular el promedio semanal del clima ===")
+        for dia in dias_semana:
+            while True:
+                try:
+                    temperatura = float(input(f"Ingrese la temperatura del {dia}: "))
+                    self.clima_semanal.agregar_dia(dia, temperatura)
+                    break
+                except ValueError:
+                    print("Por favor, ingrese un número válido.")
+        
+        # Mostrar el clima semanal
+        self.clima_semanal.mostrar_clima()
+
+        # Calcular y mostrar el promedio semanal
+        promedio = self.clima_semanal.calcular_promedio()
+        print(f"\nEl promedio semanal de temperaturas es: {promedio:.2f}°C")
+
+# Crear una instancia del programa y ejecutarlo
+if __name__ == "__main__":
+    programa = ProgramaClima()
+    programa.ejecutar()
